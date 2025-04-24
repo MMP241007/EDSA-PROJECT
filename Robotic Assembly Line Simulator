@@ -2,6 +2,7 @@
 //MOHAMMED MISHAL P
 //Submitted on 24/04/2025
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -186,9 +187,11 @@ int main()
     
     // Enqueue parts
     int choice;
-    printf("Enter the parts to be enqued: \n1.Engine\n2.Chassis\n3.Wheels\n4.Doors\n5.Battery\n6.Hood");
+    printf("Do you want to start the process by adding them to conveyor belt: \n1.Engine\n2.Chassis\n3.Wheels\n4.Doors\n5.Battery\n6.Hood\nYes(1) or No(0)");
     scanf("%d",&choice);
 
+    if(choice==1)
+    {
         enqueue(&conveyorBelt, "Engine");
         enqueue(&conveyorBelt, "Chassis");
         enqueue(&conveyorBelt, "Wheels");
@@ -197,39 +200,44 @@ int main()
         enqueue(&conveyorBelt, "Hood");
     
     
-    // Process parts
-    printf("\nRobot arm processing parts:\n");
-    char* part;
-    while ((part = dequeue(&conveyorBelt)) != NULL) {
-        printf("Robot arm picked: %s\n", part);
-        push(&assemblyStack, part);
+        // Process parts
+        printf("\nRobot arm processing parts:\n");
+        char* part;
+        while ((part = dequeue(&conveyorBelt)) != NULL) {
+            printf("Robot arm picked: %s\n", part);
+            push(&assemblyStack, part);
+        }
+        
+        // Assembly order
+        printf("\nAssembly order:\n");
+        while ((part = pop(&assemblyStack)) != NULL) {
+            printf("Assembling: %s\n", part);
+        }
+        
+        // Part b) Assembly Storage Unit
+        printf("\n--- Part b) Assembly Storage Unit ---\n");
+        for (int i = 1; i <= 10; i++) {
+            char* car = (char*)malloc(10);
+            sprintf(car, "Car%d", i);
+            addToGarage(car);
+        }
+        
+        // Part c) Defective Prototype Tracker
+        printf("\n--- Part c) Defective Prototype Tracker ---\n");
+        addToDefectiveList("Car3");
+        addToDefectiveList("Car6");
+        moveToRepairedList("Car3");
+        
+        // Part d) VIP Priority Upgrades
+        printf("\n--- Part d) VIP Priority Upgrades ---\n");
+        addToVIPList("Car1");
+        addToVIPList("Car5");
+        traverseVIPList(2);
     }
-    
-    // Assembly order
-    printf("\nAssembly order:\n");
-    while ((part = pop(&assemblyStack)) != NULL) {
-        printf("Assembling: %s\n", part);
+    else
+    {
+        printf("\nProcess stopped !!");
     }
-    
-    // Part b) Assembly Storage Unit
-    printf("\n--- Part b) Assembly Storage Unit ---\n");
-    for (int i = 1; i <= 10; i++) {
-        char* car = (char*)malloc(10);
-        sprintf(car, "Car%d", i);
-        addToGarage(car);
-    }
-    
-    // Part c) Defective Prototype Tracker
-    printf("\n--- Part c) Defective Prototype Tracker ---\n");
-    addToDefectiveList("Car3");
-    addToDefectiveList("Car6");
-    moveToRepairedList("Car3");
-    
-    // Part d) VIP Priority Upgrades
-    printf("\n--- Part d) VIP Priority Upgrades ---\n");
-    addToVIPList("Car1");
-    addToVIPList("Car5");
-    traverseVIPList(2);
     
     return 0;
 }
